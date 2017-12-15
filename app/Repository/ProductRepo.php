@@ -1,9 +1,10 @@
 <?php // i could connect repo with entity but couldnt know what is the purpose as i can do that directly (no time to figure out)
 namespace App\Repository;
 use App\Entities\Product;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 
-class ProductRepo
+class ProductRepo extends EntityRepository
 {
 
     /**
@@ -22,7 +23,7 @@ class ProductRepo
     }
     public function retriveAll()
     {
-
+      return $this->em->findAll();
     }
 
     public function create(Product $product)

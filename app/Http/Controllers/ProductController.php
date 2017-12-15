@@ -3,79 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Product;
-use Illuminate\Http\Request;
-use Doctrine\ORM\EntityManagerInterface;
-
+use App\Repository\ProductRepository;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
+use LaravelDoctrine\ORM\Facades\EntityManager;
 class ProductController extends Controller
 {
+  /**
+   * @var ProductRepo
+   */
+  protected $productRepository;
 
-
-  public function getIndex(EntityManagerInterface $em)
+  /**
+   * ProductController constructor.
+   *
+   */
+  public function __construct()
   {
-      $products = $em->getRepository(Product::class)->findAll();
-
-      return view('admin.index', [
-          'products' => $products
-      ]);
+      $em = app('em');
+      /** @var \Doctrine\ORM\EntityManager $em */
+      $this->repository = $em->getRepository(Product::class);
   }
 
-    public function getAdd()
-    {
-        return view('add');
-    }
-
-    public function ProductAdd(Request $request, EntityManagerInterface $em)
-    {
-        $task = new Task(
-            $request->get('name'),
-            $request->get('description')
-        );
-
-        $em->persist($task);
-        $em->flush();
-
-        return redirect('add')->with('success_message', 'Task added successfully!');
-    }
-    public function getToggle(EntityManagerInterface $em, $taskId)
+  /**
+ * Display a listing of the resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function getIndex()
 {
-    /* @var Task $task */
-    $task = $em->getRepository(Task::class)->find($taskId);
 
-    $task->toggleStatus();
-    $newStatus = ($task->isDone()) ? 'done' : 'not done';
-
-    $em->flush();
-
-    return redirect('/')->with('success_message', 'Task successfully marked as ' . $newStatus);
-}
-public function getDelete(EntityManagerInterface $em, $taskId)
-{
-    $task = $em->getRepository(Task::class)->find($taskId);
-
-    $em->remove($task);
-    $em->flush();
-
-    return redirect('/')->with('success_message', 'Task successfully removed.');
-}
-public function getEdit(EntityManagerInterface $em, $taskId)
-{
-    $task = $em->getRepository(Task::class)->find($taskId);
-
-    return view('edit', [
-        'task' => $task
-    ]);
-}
-public function ProductEdit(Request $request, EntityManagerInterface $em, $taskId)
-{
-    /* @var Task $task */
-    $task = $em->getRepository(Task::class)->find($taskId);
-
-    $task->setName($request->get('name'));
-    $task->setDescription($request->get('description'));
-
-    $em->flush();
-
-    return redirect('edit/' . $task->getId())->with('success_message', 'Task modified successfully.');
+      $products= $this->repository->retriveAll();
+//  $products=$this->repository->retriveAll();
+ return view('admin.index', compact('products'));
+// return dd($products);
+ //return dd($this->repository);
 }
 
+/*  $products = $em->getRepository(Product::class)
+                         ->findOneBy(array('name' => $productName));
+                         return view('admin.index', compact('products'));*/
+
+
+/*  $products =EntityManager::All();
+
+    return view('admin.index', compact('products'));*/
 }

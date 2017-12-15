@@ -5,10 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product")
+ * @ORM\Table(name="cart")
  *
  */
-class Product
+class Cart
 {
   /**
      * @ORM\Id

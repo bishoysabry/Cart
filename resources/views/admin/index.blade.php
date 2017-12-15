@@ -1,3 +1,4 @@
+
 @extends('layouts.master')
 
 @section('title')
@@ -9,7 +10,8 @@ products
 <br>
 <br>
  <h1>hello</h1>
- @foreach($products as $product)
+
+ @forelse($products as $product)
  <article class="product" data-productid="">
    <h1>{{$product->name}}</h1>
    <div class="info">
@@ -25,6 +27,8 @@ products
    </div>
 
  </article>
-@endforeach
+ @empty
+ no posts
+@endforelse
 
 @endsection

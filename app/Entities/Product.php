@@ -1,6 +1,6 @@
 <?php
 namespace App\Entities;
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,17 +15,17 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    public $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    public $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string")
      */
-    public $description;
+    protected $description;
 
     public function __construct($input)
     {
