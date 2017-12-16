@@ -1,12 +1,15 @@
 <?php
 namespace App\Entities;
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Cart
+ *
+ * @package App\Entities
+ *
  * @ORM\Entity
  * @ORM\Table(name="cart")
- *
  */
 class Cart
 {
@@ -15,46 +18,86 @@ class Cart
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    public $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    public $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string")
      */
-    public $description;
+    protected $description;
+    /**
+     * @ORM\ManyToMany(targetEntity="Product",inversedBy="cart")
+     * @var ArrayCollection|Cart[]
+     */
+    protected $products;
+    /**
+   * Tag constructor.
+   *
+   * @param $name
+   */
+  public function __construct($name)
+  {
+      $this->name = $name;
 
-    public function __construct($input)
-    {
-        $this->setName($input['name']);
-        $this->setDescription($input['description']);
-    }
-
+      $this->products = new ArrayCollection();
+  }
+  /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setName($name)
+    /**
+     * @return Product
+     */
+    public function getProducts()
     {
-        $this->name = $name;
+        return $this->products;
     }
 
-    public function getDescription()
+    /**
+     * @param Product $product
+     */
+    public function addProduct(Product $product)
     {
-        return $this->description;
+        if (!$this->hasProduct($product)) {
+            $this->product->add($product);
+        }
+        return $this;
     }
 
-    public function setDescription($description)
+    /**
+     * @param Product $product
+     * @return boolean
+     */
+    public function hasProduct(Product $product)
     {
-        $this->description = $description;
+        return $this->product->contains($product);
+    }
+
+    /**
+     * @param Product $product
+     * @return bool
+     */
+    public function removeProduct(Product $product)
+    {
+        if ($this->hasProduct($product)) {
+            return $this->articles->removeElement($product);
+        }
+        return false;
     }
 }

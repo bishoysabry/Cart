@@ -16,7 +16,7 @@ class ProductController extends Controller
   /**
    * @var ProductRepo
    */
-  protected $productRepository;
+    protected $repository;
 
   /**
    * ProductController constructor.
@@ -32,17 +32,29 @@ class ProductController extends Controller
   /**
  * Display a listing of the resource.
  *
- * @return \Illuminate\Http\Response
+ * @return array
  */
 public function getIndex()
 {
 
-      $products= $this->repository->retriveAll();
+ $products = $this->repository->findAll();
+  //return dd($products);
+ //$products = EntityManager::findAll(Product::class);
+  //    $products= $this->repository->findAll();
 //  $products=$this->repository->retriveAll();
- return view('admin.index', compact('products'));
+return view('admin.index', compact('products'));
 // return dd($products);
  //return dd($this->repository);
 }
+
+
+
+
+
+
+
+
+
 
 /*  $products = $em->getRepository(Product::class)
                          ->findOneBy(array('name' => $productName));

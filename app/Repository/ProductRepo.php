@@ -7,24 +7,8 @@ use Doctrine\ORM\EntityManager;
 class ProductRepo extends EntityRepository
 {
 
-    /**
-     * @var string
-     */
-    private $class = 'App\Entities\Product';
-    /**
-     * @var EntityManager
-     */
-    private $em;
 
 
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-    public function retriveAll()
-    {
-      return $this->em->findAll();
-    }
 
     public function create(Product $product)
     {

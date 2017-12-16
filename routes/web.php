@@ -15,7 +15,34 @@ Route::get('/', function () {
     return view('welcome');
 });
   Route::get('/products', 'ProductController@getIndex')->name('products');
-Route::get('product-add', function () {
+  Route::get('/orderproducts', 'CartController@getAllProducts')->name('cartproducts');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Route::get('product-add', function () {
     $product = new \App\Entities\Product([
       'name' => 'Makecar2',
       'description' => 'car description.']);
@@ -24,4 +51,4 @@ Route::get('product-add', function () {
     \EntityManager::flush();
 
     return 'added!';
-});
+});*/
