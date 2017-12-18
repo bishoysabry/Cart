@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Product;
+use App\Entities\Cart;
 use App\Repository\ProductRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -36,13 +37,14 @@ class ProductController extends Controller
  */
 public function getIndex()
 {
-
+$ordercart = EntityManager::find(Cart::class,2);
+$wishlistcart = EntityManager::find(Cart::class,1);
  $products = $this->repository->findAll();
   //return dd($products);
  //$products = EntityManager::findAll(Product::class);
   //    $products= $this->repository->findAll();
 //  $products=$this->repository->retriveAll();
-return view('admin.index', compact('products'));
+return view('admin.index', compact(['products','ordercart','wishlistcart']));
 // return dd($products);
  //return dd($this->repository);
 }

@@ -36,19 +36,14 @@ class CartController extends Controller
 
   }
 
-public function addProduct(Product $product)
+public function addProduct($cartname ,$id)
 {
   $em = app('em');
   /** @var \Doctrine\ORM\EntityManager $em */
   $this->repository = $em->getRepository(Cart::class);
-  $cart = $this->repository->findOneBy(['name'=>'ordercart']);
-  $product = new Product();
-  $product->setName('useful');
-  $product->setDescription('useful descrtiption ');
-  EntityManager::persist($product);
-  EntityManager::flush();
+  $cart = $this->repository->findOneBy(['name'=>$cartname]);
+  $product = EntityManager::find(Product::class,$id);
   $cart->addProduct($product);
   EntityManager::flush();
-  return "doneadd";
-}
+return redirect("products");}
 }
