@@ -19,19 +19,36 @@ class CartController extends Controller
     $em = app('em');
     /** @var \Doctrine\ORM\EntityManager $em */
     $this->repository = $em->getRepository(Cart::class);
-          $products = $this->repository->findOneBy(['name'=>'ordercart']);
+          $cart = $this->repository->findOneBy(['name'=>'ordercart']);
+      //    $cart = $this->repository->findAll();
 
-         return view('ordercart', compact('products'));
+         return view('ordercart', compact('cart'));
   }
-  public function getProducts()
+  public function removeProducts()
   {
-
-  }
-  public function getAllProducts()
-{
     $em = app('em');
     /** @var \Doctrine\ORM\EntityManager $em */
-    $repository = $em->getRepository(Product::class);
-    return dd($repository->findAll());
+    $this->repository = $em->getRepository(Cart::class);
+          $cart = $this->repository->findOneBy(['name'=>'ordercart']);
+          $cart->removeAllProducts();
+          EntityManager::flush();
+          return "done";
+
+  }
+
+public function addProduct(Product $product)
+{
+  $em = app('em');
+  /** @var \Doctrine\ORM\EntityManager $em */
+  $this->repository = $em->getRepository(Cart::class);
+  $cart = $this->repository->findOneBy(['name'=>'ordercart']);
+  $product = new Product();
+  $product->setName('useful');
+  $product->setDescription('useful descrtiption ');
+  EntityManager::persist($product);
+  EntityManager::flush();
+  $cart->addProduct($product);
+  EntityManager::flush();
+  return "doneadd";
 }
 }

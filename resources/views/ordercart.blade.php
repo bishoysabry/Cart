@@ -9,6 +9,12 @@ orderCart
 @section('content')
 <br>
 <br>
-{{dd($products->getName())}}
+<br>
+<br>
+<?php  $cartproducts = $cart->getProducts()?>
+@foreach ($cartproducts as $product)
+{{$product->getName()}}
+{{$product->getDescription()}}
+@endforeach
 
 @endsection

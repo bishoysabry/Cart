@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
   Route::get('/products', 'ProductController@getIndex')->name('products');
   Route::get('/orderproducts', 'CartController@getAllProducts')->name('cartproducts');
+  Route::get('/cart', 'CartController@CartProducts')->name('cartproducts');
+  Route::get('/remove', 'CartController@removeProducts')->name('remove');
+  Route::get('/add', 'CartController@addProduct')->name('add');
 
 
 

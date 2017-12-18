@@ -62,7 +62,7 @@ class Cart
     }
 
     /**
-     * @return Product
+     * @return Product[]|ArrayCollection
      */
     public function getProducts()
     {
@@ -70,12 +70,13 @@ class Cart
     }
 
     /**
-     * @param Product $product
+    * @param $product
+    * @return Cart
      */
     public function addProduct(Product $product)
     {
         if (!$this->hasProduct($product)) {
-            $this->product->add($product);
+            $this->products->add($product);
         }
         return $this;
     }
@@ -86,7 +87,7 @@ class Cart
      */
     public function hasProduct(Product $product)
     {
-        return $this->product->contains($product);
+        return $this->products->contains($product);
     }
 
     /**
@@ -96,8 +97,21 @@ class Cart
     public function removeProduct(Product $product)
     {
         if ($this->hasProduct($product)) {
-            return $this->articles->removeElement($product);
+            return $this->products->removeElement($product);
         }
         return false;
     }
+
+        /**
+         * @param Product $product
+         * @return bool
+         */
+    public function removeAllProducts()
+    {
+      $cartproducts = $this->products;
+      foreach ($cartproducts as $cartproduct) {
+         $this->products->removeElement($cartproduct);
+        }
+
+  }
 }
