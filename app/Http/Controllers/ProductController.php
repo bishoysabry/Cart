@@ -37,7 +37,7 @@ class ProductController extends Controller
  */
 public function getIndex()
 {
-$ordercart = EntityManager::find(Cart::class,2);
+$ordercart = EntityManager::find(Cart::class,2); // to pass oder cart to check if prouct allready in or not
 $wishlistcart = EntityManager::find(Cart::class,1);
  $products = $this->repository->findAll();
   //return dd($products);

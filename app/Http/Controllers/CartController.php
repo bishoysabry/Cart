@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Session;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 class CartController extends Controller
 {
-  public function CartProducts()
+  public function CartProducts($cartname)
   {
     $em = app('em');
     /** @var \Doctrine\ORM\EntityManager $em */
     $this->repository = $em->getRepository(Cart::class);
-          $cart = $this->repository->findOneBy(['name'=>'ordercart']);
+          $cart = $this->repository->findOneBy(['name'=>$cartname]);
       //    $cart = $this->repository->findAll();
 
-         return view('ordercart', compact('cart'));
+         return view('cartproducts', compact('cart'));
   }
   public function removeProducts()
   {
