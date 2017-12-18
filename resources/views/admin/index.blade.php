@@ -27,7 +27,7 @@ products
      @if ($wishlistcart->hasProduct($product))
     <span> Added to WishList Cart</span> |
     @else
-     <a   href="/add/wish list cart/{{$product->getId()}}"> add to Wishlist Cart </a> |
+     <a   href="/add/wishlistcart/{{$product->getId()}}"> add to Wishlist Cart </a> |
      @endif
 
 

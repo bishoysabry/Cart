@@ -24,12 +24,12 @@ class CartController extends Controller
 
          return view('cartproducts', compact('cart'));
   }
-  public function removeProducts()
+  public function removeProducts($cartname)
   {
     $em = app('em');
     /** @var \Doctrine\ORM\EntityManager $em */
     $this->repository = $em->getRepository(Cart::class);
-          $cart = $this->repository->findOneBy(['name'=>'ordercart']);
+          $cart = $this->repository->findOneBy(['name'=>$cartname]);
           $cart->removeAllProducts();
           EntityManager::flush();
           return "done";
